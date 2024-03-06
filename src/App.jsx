@@ -6,6 +6,7 @@ import Loader from "./Loader/Loader";
 import { Toaster } from "react-hot-toast";
 import ErrorMessage from "./ErrorMessage/ErrorMessage";
 import Button from "./LoadMoreBtn/LoadMoreBtn";
+import { ImageModal } from "./ImageModal/ImageModal";
 
 function App() {
   const [query, setQuery] = useState("");
@@ -13,6 +14,10 @@ function App() {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [largeImageUrl, setLargeImageUrl] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+  const toggleModal = () => setShowModal((prevShowModal) => !prevShowModal);
 
   useEffect(() => {
     if (query === "") return;
@@ -48,9 +53,24 @@ function App() {
       <SearchBar onSearch={handleSearch} />
 
       {error && <ErrorMessage />}
-      {images.length > 0 && <ImageGallery data={images} />}
+      {images.length > 0 && (
+        <ImageGallery
+          data={images}
+          onSelectImg={setLargeImageUrl}
+          onShowModal={setShowModal}
+        />
+      )}
       {images.length > 0 && !isLoading && <Button onHandle={handleLoadMore} />}
       {isLoading && <Loader />}
+
+      {showModal && (
+        <ImageModal
+          bigImages={largeImageUrl}
+          isModalOpen={showModal}
+          onClose={toggleModal}
+        />
+      )}
+
       <Toaster />
     </div>
   );

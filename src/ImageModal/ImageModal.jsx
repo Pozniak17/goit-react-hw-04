@@ -18,7 +18,7 @@ const customStyles = {
 };
 Modal.setAppElement("#root");
 
-export const ImageModal = ({ isModalOpen, onClose, bigImages, tags }) => {
+export const ImageModal = ({ isModalOpen, onClose, bigImages }) => {
   return (
     <Modal
       isOpen={isModalOpen}
@@ -27,7 +27,7 @@ export const ImageModal = ({ isModalOpen, onClose, bigImages, tags }) => {
       contentLabel="Gallary modal"
     >
       <ModalWindow>
-        <img src={bigImages} alt={tags} />
+        <img src={bigImages} />
       </ModalWindow>
     </Modal>
   );
